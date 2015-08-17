@@ -4,12 +4,7 @@ import java.util.List;
 
 public class ChannelPropertyRewriterTest {
 	
-	public static void main(String...args) {
-		new ChannelPropertyRewriterTest().testRewrite();
-		new ChannelPropertyRewriterTest().testListRewrite();
-	}
-	
-	public void testRewrite() {
+	public static void testRewrite() {
 		ChannelPropertyRewriter rewriter = new ChannelPropertyRewriter();
 		TestProperties properties = new TestProperties();
 		properties.setTestValue("test/${format(now() - '2m' + '1d', 'yyyy/MM/dd')}/dir");
@@ -17,7 +12,7 @@ public class ChannelPropertyRewriterTest {
 		System.out.println(rewrite);
 	}
 	
-	public void testListRewrite() {
+	public static void testListRewrite() {
 		ChannelPropertyRewriter rewriter = new ChannelPropertyRewriter();
 		TestProperties properties = new TestProperties();
 		properties.setTestValue("test/${range(now() - '2y', now(), '1y', 'yyyy')}/${range(now() - '2d', now(), '1d', 'MM/dd')}/dir");
