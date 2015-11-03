@@ -24,7 +24,6 @@ import be.nabu.libs.resources.URIUtils;
 import be.nabu.libs.resources.api.ManageableContainer;
 import be.nabu.libs.resources.api.ReadableResource;
 import be.nabu.libs.resources.api.Resource;
-import be.nabu.libs.resources.api.ResourceRoot;
 import be.nabu.libs.resources.api.WritableResource;
 import be.nabu.utils.io.IOUtils;
 import be.nabu.utils.io.api.ByteBuffer;
@@ -51,7 +50,7 @@ public class FileInProvider implements TwoPhaseChannelProvider<FileInProperties>
 	@Override
 	public void transact(FileInProperties properties, WritableDatastore datastore, DataTransactionBatch<ChannelProvider<?>> transactionBatch, URI...requests) throws ChannelException {
 		try {
-			ResourceRoot resource = ResourceFactory.getInstance().resolve(new URI(URIUtils.encodeURI(properties.getUri())), properties.getPrincipal());
+			Resource resource = ResourceFactory.getInstance().resolve(new URI(URIUtils.encodeURI(properties.getUri())), properties.getPrincipal());
 			if (resource != null) {
 				transact(properties, datastore, transactionBatch, resource, true);
 			}

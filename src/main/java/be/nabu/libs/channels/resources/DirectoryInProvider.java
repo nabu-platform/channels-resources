@@ -20,7 +20,6 @@ import be.nabu.libs.resources.URIUtils;
 import be.nabu.libs.resources.api.ReadableResource;
 import be.nabu.libs.resources.api.Resource;
 import be.nabu.libs.resources.api.ResourceContainer;
-import be.nabu.libs.resources.api.ResourceRoot;
 
 public class DirectoryInProvider implements ChannelProvider<DirectoryInProperties> {
 
@@ -29,7 +28,7 @@ public class DirectoryInProvider implements ChannelProvider<DirectoryInPropertie
 	@Override
 	public void transact(DirectoryInProperties properties, WritableDatastore datastore, DataTransactionBatch<ChannelProvider<?>> transactionProvider, URI...requests) throws ChannelException {
 		try {
-			ResourceRoot resource = ResourceFactory.getInstance().resolve(new URI(URIUtils.encodeURI(properties.getUri())), properties.getPrincipal());
+			Resource resource = ResourceFactory.getInstance().resolve(new URI(URIUtils.encodeURI(properties.getUri())), properties.getPrincipal());
 			if (resource != null) {
 				try {
 					if (!(resource instanceof ResourceContainer)) {
