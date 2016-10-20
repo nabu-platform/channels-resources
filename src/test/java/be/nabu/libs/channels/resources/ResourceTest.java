@@ -67,12 +67,13 @@ public class ResourceTest {
 		ResourceDatastore datastore = new ResourceDatastore(new DataRouterBase(new URI("memory:/datastore")));
 		datastore.setUrnManager(new DatabaseURNManager(dataSource, TimeZone.getDefault(), "com.example"));
 		
+		ChannelResultHandler newChannelResultHandler = ChannelUtils.newChannelResultHandler(new TemporaryDataTransactionhandler());
 		channelProvider.transact(
 			properties, 
 			datastore,
-			ChannelUtils.manage(dataTransactionProvider.newBatch(new EmptyProviderResolver(), "context", "localhost", null, Direction.IN, Transactionality.THREE_PHASE),
+			ChannelUtils.manage(dataTransactionProvider.newBatch(new EmptyProviderResolver(), "context", "localhost", null, ChannelUtils.newChannelResultHandlerResolver().getId(newChannelResultHandler), Direction.IN, Transactionality.THREE_PHASE),
 //					new TemporaryResultHandler())
-					ChannelUtils.newChannelResultHandler(new TemporaryDataTransactionhandler()))
+					newChannelResultHandler)
 		);
 		
 		String content = new String(IOUtils.toBytes(new ResourceReadableContainer((ReadableResource) ResourceFactory.getInstance().resolve(new URI("memory:/processed/test1.txt"), null))));
