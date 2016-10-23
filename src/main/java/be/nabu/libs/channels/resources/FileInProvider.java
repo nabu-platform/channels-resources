@@ -11,6 +11,7 @@ import java.net.URLConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import be.nabu.libs.authentication.impl.AuthenticationUtils;
 import be.nabu.libs.channels.api.ChannelException;
 import be.nabu.libs.channels.api.ChannelProvider;
 import be.nabu.libs.channels.api.TwoPhaseChannelProvider;
@@ -50,7 +51,7 @@ public class FileInProvider implements TwoPhaseChannelProvider<FileInProperties>
 	@Override
 	public void transact(FileInProperties properties, WritableDatastore datastore, DataTransactionBatch<ChannelProvider<?>> transactionBatch, URI...requests) throws ChannelException {
 		try {
-			Resource resource = ResourceFactory.getInstance().resolve(new URI(URIUtils.encodeURI(properties.getUri())), properties.getPrincipal());
+			Resource resource = ResourceFactory.getInstance().resolve(new URI(URIUtils.encodeURI(properties.getUri())), AuthenticationUtils.toPrincipal(properties.getUsername(), properties.getPassword()));
 			if (resource != null) {
 				transact(properties, datastore, transactionBatch, resource, true);
 			}
@@ -116,7 +117,7 @@ public class FileInProvider implements TwoPhaseChannelProvider<FileInProperties>
 			boolean hasMoved = false;
 			if (properties.getProcessedExtension() != null || properties.getProcessedDirectory() != null) {
 				if (resource == null) {
-					resource = ResourceFactory.getInstance().resolve(new URI(URIUtils.encodeURI(properties.getUri())), properties.getPrincipal());
+					resource = ResourceFactory.getInstance().resolve(new URI(URIUtils.encodeURI(properties.getUri())), AuthenticationUtils.toPrincipal(properties.getUsername(), properties.getPassword()));
 				}
 				if (resource != null) {
 					String targetName = properties.getProcessedExtension() == null ? resource.getName() : resource.getName().replaceAll("\\.([^.]+)$", properties.getProcessedExtension());
@@ -161,7 +162,7 @@ public class FileInProvider implements TwoPhaseChannelProvider<FileInProperties>
 			}
 			if (hasMoved || Boolean.TRUE.equals(properties.getDeleteOriginal())) {
 				if (this.resource == null) {
-					this.resource = ResourceFactory.getInstance().resolve(new URI(URIUtils.encodeURI(properties.getUri())), properties.getPrincipal());
+					this.resource = ResourceFactory.getInstance().resolve(new URI(URIUtils.encodeURI(properties.getUri())), AuthenticationUtils.toPrincipal(properties.getUsername(), properties.getPassword()));
 				}
 				if (resource != null) {
 					if (!(resource.getParent() instanceof ManageableContainer)) {

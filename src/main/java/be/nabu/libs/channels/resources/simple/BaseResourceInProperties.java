@@ -1,16 +1,14 @@
 package be.nabu.libs.channels.resources.simple;
 
-import java.security.Principal;
-
 import be.nabu.libs.channels.resources.ResourceProperties;
 
 abstract public class BaseResourceInProperties implements ResourceProperties {
 
 	private String uri;
-	private Principal principal;
 	private Boolean mustExist;
 	private Boolean deleteOriginal;
 	private String processedExtension, processedDirectory;
+	private String username, password;
 	
 	/**
 	 * It is made a string to enable easy replacement
@@ -18,11 +16,6 @@ abstract public class BaseResourceInProperties implements ResourceProperties {
 	@Override
 	public String getUri() {
 		return uri;
-	}
-
-	@Override
-	public Principal getPrincipal() {
-		return principal;
 	}
 
 	@Override
@@ -49,10 +42,6 @@ abstract public class BaseResourceInProperties implements ResourceProperties {
 		this.uri = uri;
 	}
 
-	public void setPrincipal(Principal principal) {
-		this.principal = principal;
-	}
-
 	public void setMustExist(Boolean mustExist) {
 		this.mustExist = mustExist;
 	}
@@ -68,4 +57,21 @@ abstract public class BaseResourceInProperties implements ResourceProperties {
 	public void setProcessedDirectory(String processedDirectory) {
 		this.processedDirectory = processedDirectory;
 	}
+
+	@Override
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	@Override
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
 }

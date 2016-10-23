@@ -1,7 +1,5 @@
 package be.nabu.libs.channels.resources;
 
-import java.security.Principal;
-
 import javax.validation.constraints.NotNull;
 
 public interface ResourceProperties {
@@ -10,9 +8,13 @@ public interface ResourceProperties {
 	public String getUri();
 	
 	/**
-	 * The principal used to access the backend
+	 * The username used to access the backend
 	 */
-	public Principal getPrincipal();
+	public String getUsername();
+	/**
+	 * The password used to access the backend
+	 */
+	public String getPassword();
 	
 	/**
 	 * Defaults to false, if set to true, it will throw an exception if it doesn't exist

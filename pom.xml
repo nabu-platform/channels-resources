@@ -57,6 +57,10 @@
 			<groupId>be.nabu.libs.types</groupId>
 			<artifactId>types-binding-xml</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>be.nabu.libs.authentication</groupId>
+			<artifactId>authentication-api</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>ch.qos.logback</groupId>

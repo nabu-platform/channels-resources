@@ -8,6 +8,7 @@ import java.net.URISyntaxException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import be.nabu.libs.authentication.impl.AuthenticationUtils;
 import be.nabu.libs.channels.api.ChannelException;
 import be.nabu.libs.channels.api.ChannelProvider;
 import be.nabu.libs.channels.resources.simple.SimpleFileInProperties;
@@ -28,7 +29,7 @@ public class DirectoryInProvider implements ChannelProvider<DirectoryInPropertie
 	@Override
 	public void transact(DirectoryInProperties properties, WritableDatastore datastore, DataTransactionBatch<ChannelProvider<?>> transactionProvider, URI...requests) throws ChannelException {
 		try {
-			Resource resource = ResourceFactory.getInstance().resolve(new URI(URIUtils.encodeURI(properties.getUri())), properties.getPrincipal());
+			Resource resource = ResourceFactory.getInstance().resolve(new URI(URIUtils.encodeURI(properties.getUri())), AuthenticationUtils.toPrincipal(properties.getUsername(), properties.getPassword()));
 			if (resource != null) {
 				try {
 					if (!(resource instanceof ResourceContainer)) {
@@ -69,7 +70,8 @@ public class DirectoryInProvider implements ChannelProvider<DirectoryInPropertie
 				}
 				SimpleFileInProperties fileProperties = new SimpleFileInProperties();
 				fileProperties.setUri(URIUtils.decodeURI(ResourceUtils.getURI(child).toString()));
-				fileProperties.setPrincipal(properties.getPrincipal());
+				fileProperties.setUsername(properties.getUsername());
+				fileProperties.setPassword(properties.getPassword());
 				fileProperties.setDeleteOriginal(properties.getDeleteOriginal());
 				fileProperties.setProcessedDirectory(processedDirectory);
 				fileProperties.setProcessedExtension(properties.getProcessedExtension());
