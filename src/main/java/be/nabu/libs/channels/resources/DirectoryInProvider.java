@@ -4,6 +4,8 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,7 +64,12 @@ public class DirectoryInProvider implements ChannelProvider<DirectoryInPropertie
 	}
 
 	private void scan(DirectoryInProperties properties, WritableDatastore datastore, DataTransactionBatch<ChannelProvider<?>> transactionProvider, ResourceContainer<?> container, String path) throws ChannelException, IOException {
+		List<Resource> children = new ArrayList<Resource>();
+		// make a new list, the original container will be modified when a file in provider is set to delete the files triggering a concurrentmodificationexception
 		for (Resource child : container) {
+			children.add(child);
+		}
+		for (Resource child : children) {
 			if (child instanceof ReadableResource && (properties.getFileRegex() == null || child.getName().matches(properties.getFileRegex()))) {
 				String processedDirectory = null;
 				if (properties.getProcessedDirectory() != null) {
