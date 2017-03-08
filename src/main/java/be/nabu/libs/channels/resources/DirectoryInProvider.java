@@ -103,7 +103,7 @@ public class DirectoryInProvider implements ChannelProvider<DirectoryInPropertie
 	
 	@Override
 	public boolean equals(Object object) {
-		return object instanceof FileInProvider;
+		return object instanceof DirectoryInProvider;
 	}
 	
 	@Override

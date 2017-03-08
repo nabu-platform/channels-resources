@@ -98,7 +98,7 @@ public class FileOutProvider implements ChannelProvider<FileOutProperties> {
 
 	@Override
 	public boolean equals(Object object) {
-		return object instanceof FileInProvider;
+		return object instanceof FileOutProvider;
 	}
 	
 	@Override
